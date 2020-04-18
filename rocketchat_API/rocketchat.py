@@ -227,6 +227,22 @@ class RocketChat:
         """Send email to reset your password."""
         return self.__call_api_post('users.forgotPassword', email=email, data=kwargs)
 
+    def users_set_active_status(self, user_id=None, active_status=None, **kwargs):
+        """Set user active status"""
+        if user_id:
+            return self.__call_api_post('users.setActiveStatus', userId=user_id, activeStatus=active_status, data=kwargs)
+        else:
+            raise RocketMissingParamException('userId required')
+
+    def users_set_status(self, user_id=None, message=None, status=None, **kwargs):
+        """Set user status"""
+        if not message:
+            raise RocketMissingParamException('message required')
+        if user_id:
+            return self.__call_api_post('users.setStatus', userId=user_id, message=message, status=status, data=kwargs)
+        else:
+            raise RocketMissingParamException('userId required')
+
     # Chat
 
     def chat_post_message(self, text, room_id=None, channel=None, **kwargs):
